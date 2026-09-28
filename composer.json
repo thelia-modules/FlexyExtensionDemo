@@ -1,0 +1,14 @@
+{
+  "name": "thelia/flexy-extension-demo-module",
+  "description": "Shows how a Thelia module extends the Flexy front: a Twig component, a theme hook, a toolkit story, a stylesheet and a Stimulus controller of its own",
+  "license": "GPL-3.0-or-later",
+  "type": "thelia-module",
+  "require": {
+    "php": ">=8.3 <9.0",
+    "thelia/installer": "^1.6",
+    "thelia/flexy": "^1.1"
+  },
+  "extra": {
+    "installer-name": "FlexyExtensionDemo"
+  }
+}

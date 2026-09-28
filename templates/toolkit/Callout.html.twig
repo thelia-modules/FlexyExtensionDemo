@@ -1,0 +1,35 @@
+<div class="Story-section">
+    <h4 class="Story-title">With a button</h4>
+    <div class="Story-row">
+        <twig:FlexyExtensionDemo:Callout
+            id="story-button"
+            title="Called by hand"
+            text="Paste this tag in any template of the theme, or of another module, to show the callout."
+            href="#"
+            label="Learn more"
+        />
+    </div>
+</div>
+
+<div class="Story-section">
+    <h4 class="Story-title">Text only</h4>
+    <div class="Story-row">
+        <twig:FlexyExtensionDemo:Callout
+            id="story-text"
+            title="Called by hand"
+            text="Without href and label, the callout shows no button. Close it: the module's Stimulus controller removes it and remembers that for the session."
+        />
+    </div>
+</div>
+
+<div class="Story-section">
+    <h4 class="Story-title">Not dismissible</h4>
+    <div class="Story-row">
+        <twig:FlexyExtensionDemo:Callout
+            id="story-fixed"
+            title="Called by hand"
+            text="With dismissible set to false, no controller is attached and the callout has no close button."
+            :dismissible="false"
+        />
+    </div>
+</div>

@@ -1,0 +1,23 @@
+{# The wrapper keeps the theme's container classes (compiled by app.css). The callout itself
+   is styled by the module's callout.css, which the flexy-extension-demo--callout controller imports. #}
+<div class="{{ ('container-l pt-14 pb-17 ' ~ attributes.render('class'))|tailwind_merge }}" {{ attributes.without('class') }}>
+    <div class="Callout"
+         {% if dismissible %}{{ stimulus_controller('flexy-extension-demo--callout', {id: id}, {closing: 'Callout--closing'}) }}{% endif %}>
+        <div class="Callout-body">
+            <p class="Callout-title">{{ title }}</p>
+            <p class="Callout-text">{{ text }}</p>
+        </div>
+        {% if (href and label) or dismissible %}
+            <div class="Callout-actions">
+                {% if href and label %}
+                    <twig:Molecules:Button:Base href="{{ href }}" text="{{ label }}" icon_right="chevron-right" color="secondary" />
+                {% endif %}
+                {% if dismissible %}
+                    <button type="button" class="Callout-close" aria-label="Dismiss" {{ stimulus_action('flexy-extension-demo--callout', 'dismiss') }}>
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                {% endif %}
+            </div>
+        {% endif %}
+    </div>
+</div>
