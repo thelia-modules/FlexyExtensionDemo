@@ -18,10 +18,17 @@ use Thelia\Core\Hook\Theme\ThemeHookInterface;
 use Twig\Environment;
 
 /**
- * Places the callout at the top of the home page, where the theme calls `theme_hook('home.top')`.
+ * Two theme hooks: the callout's stylesheet in the page head, where the theme calls
+ * `theme_hook('layout.head.bottom')`, and the callout itself at the top of the home page,
+ * where it calls `theme_hook('home.top')`.
  */
 final readonly class CalloutThemeHook implements ThemeHookInterface
 {
+    private const array TEMPLATES = [
+        'layout.head.bottom' => '@FlexyExtensionDemoModule/theme-hook/head.html.twig',
+        'home.top' => '@FlexyExtensionDemoModule/theme-hook/callout.html.twig',
+    ];
+
     public function __construct(
         private Environment $twig,
     ) {
@@ -29,11 +36,11 @@ final readonly class CalloutThemeHook implements ThemeHookInterface
 
     public function supports(string $hookName): bool
     {
-        return 'home.top' === $hookName;
+        return isset(self::TEMPLATES[$hookName]);
     }
 
     public function render(string $hookName, array $parameters): string
     {
-        return $this->twig->render('@FlexyExtensionDemoModule/theme-hook/callout.html.twig');
+        return $this->twig->render(self::TEMPLATES[$hookName]);
     }
 }

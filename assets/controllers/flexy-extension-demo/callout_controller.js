@@ -1,7 +1,7 @@
 import { Controller } from "@hotwired/stimulus";
-// The module's own stylesheet: AssetMapper adds it to the importmap and loads it with the
-// controller, so it reaches the page without any change to the theme.
-import "../../styles/callout.css";
+// The part of the stylesheet only a dismissible callout needs: AssetMapper adds it to the
+// importmap and loads it with the controller. The base look comes with the page (see Readme).
+import "../../styles/callout-dismiss.css";
 
 /* stimulusFetch: 'lazy' */
 class CalloutController extends Controller {

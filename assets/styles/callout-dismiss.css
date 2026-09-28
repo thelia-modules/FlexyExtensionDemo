@@ -1,0 +1,33 @@
+/* What only a callout with the dismiss controller needs: the close button and the closing
+   transition. Imported by the controller, so it reaches the page with it and only then. */
+.Callout {
+  transition:
+    opacity 300ms ease,
+    transform 300ms ease;
+}
+
+.Callout--closing {
+  opacity: 0;
+  transform: translateY(-0.5rem);
+}
+
+.Callout-close {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 9999px;
+  background: none;
+  color: var(--color-black);
+  cursor: pointer;
+  font-size: var(--text-lg);
+  line-height: 1;
+}
+
+.Callout-close:hover,
+.Callout-close:focus-visible {
+  border-color: var(--color-medium);
+  outline: none;
+}

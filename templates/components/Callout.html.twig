@@ -1,5 +1,5 @@
-{# The wrapper keeps the theme's container classes (compiled by app.css). The callout itself
-   is styled by the module's callout.css, which the flexy-extension-demo--callout controller imports. #}
+{# The wrapper keeps the theme's container classes (compiled by app.css). The callout itself is
+   styled by the module's callout.css (linked in the head) and callout-dismiss.css (imported by the controller). #}
 <div class="{{ ('container-l pt-14 pb-17 ' ~ attributes.render('class'))|tailwind_merge }}" {{ attributes.without('class') }}>
     <div class="Callout"
          {% if dismissible %}{{ stimulus_controller('flexy-extension-demo--callout', {id: id}, {closing: 'Callout--closing'}) }}{% endif %}>
