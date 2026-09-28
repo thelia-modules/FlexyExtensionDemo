@@ -6,13 +6,14 @@ Shows the ways a module brings a component to the Flexy front office.
 |---|---|---|
 | A Twig component, called by hand | `Twig/Callout.php`, `templates/components/Callout.html.twig` | `<twig:FlexyExtensionDemo:Callout id="..." title="..." text="..." href="..." label="..." />` in any template |
 | The same component placed by a theme hook | `Hook/Theme/CalloutThemeHook.php`, `templates/theme-hook/callout.html.twig` | top of the home page (`theme_hook('home.top')`) |
-| A stylesheet loaded with the page | `Hook/Theme/CalloutThemeHook.php`, `templates/theme-hook/head.html.twig`, `assets/styles/callout.css` | `<link>` in the head of every shop page (`theme_hook('layout.head.bottom')`), there before the first paint |
+| A stylesheet loaded with the page | `Hook/Theme/CalloutThemeHook.php`, `templates/theme-hook/head.html.twig`, `assets/styles/callout.css` | `<link>` in the head of the home page only (`theme_hook('layout.head.index')`), there before the first paint |
 | Its story in the toolkit | `Toolkit/CalloutStoryProvider.php`, `templates/toolkit/Callout.html.twig` | `/toolkit/modules-flexy-extension-demo-callout`, in debug only |
 | A Stimulus controller of the module's own, with the stylesheet it needs | `FlexyExtensionDemo::loadConfiguration()`, `assets/controllers/flexy-extension-demo/callout_controller.js`, `assets/styles/callout-dismiss.css` | the close button of the callout; `debug:config stimulus` and `debug:asset-map` list the module's paths |
 
 ## Requirements
 
 - Thelia 3.1 with the Flexy theme carrying `FlexyBundle\Toolkit\StoryProviderInterface` (branch `feat/toolkit-module-stories`, not in 1.1.0). Without it the module fails to load.
+- The per-view head hook, `theme_hook('layout.head.' ~ view)` in the theme's `base.html.twig` (branch `feat/theme-hook-per-view`, not in 1.1.0). Without it the callout's stylesheet is never linked.
 
 ## Install
 
@@ -30,7 +31,7 @@ After adding or moving an asset path or a controller path, remove `var/cache/<en
 
 The module ships two stylesheets, one per way of reaching the page:
 
-- `assets/styles/callout.css`, the callout's look, is linked from the page head: the theme hook answers `layout.head.bottom` with `<link rel="stylesheet" href="{{ asset('flexy-extension-demo/styles/callout.css') }}">`, and `asset()` resolves the logical path to the versioned URL. It is there before the first paint, with or without JavaScript. The toolkit renders no theme hook, so the story links it itself.
+- `assets/styles/callout.css`, the callout's look, is linked from the head of the page that shows the callout: the theme's layout calls a hook named after the view (`layout.head.index` on the home page, `layout.head.product` on a product page...), and the module's theme hook answers `layout.head.index` with `<link rel="stylesheet" href="{{ asset('flexy-extension-demo/styles/callout.css') }}">`; `asset()` resolves the logical path to the versioned URL. It is there before the first paint, with or without JavaScript, and other pages do not download it. The toolkit renders no theme hook, so the story links it itself.
 - `assets/styles/callout-dismiss.css`, the close button and the closing transition, is imported by the controller (`import "../../styles/callout-dismiss.css"`), the way the theme's `ProductGallery` controller imports the Splide stylesheet. AssetMapper puts it in the importmap and loads it with the controller, which is lazy: it reaches the page once a callout with the controller is on it.
 
 Neither is compiled by Tailwind: the theme's `app.css` scans the theme's files alone. They are plain CSS on the theme's variables (`--color-lighter`, `--text-sm`...), which the compiled stylesheet puts on `:root`. The wrapper still uses the theme's container classes, which the theme compiles.
